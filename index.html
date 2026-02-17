@@ -92,9 +92,6 @@
     }
 
     .file-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       padding: 15px 20px;
       border-bottom: 1px solid #eee;
       transition: background-color 0.2s;
@@ -109,32 +106,38 @@
     }
 
     .file-info {
-      flex: 1;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 4px;
+      transition: all 0.2s;
+      min-height: 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .file-info:hover {
+      background-color: rgba(76, 175, 80, 0.1);
     }
 
     .file-title {
       font-weight: bold;
       font-size: 1.1rem;
       margin-bottom: 5px;
+      color: #4CAF50;
+      text-decoration: none;
+      display: inline-block;
+      transition: color 0.2s;
+    }
+
+    .file-info:hover .file-title {
+      text-decoration: underline;
+      color: #45a049;
     }
 
     .file-path {
       color: #666;
       font-size: 0.9rem;
-    }
-
-    .file-link a {
-      display: inline-block;
-      padding: 8px 16px;
-      background-color: #4CAF50;
-      color: white;
-      text-decoration: none;
-      border-radius: 4px;
-      transition: background-color 0.2s;
-    }
-
-    .file-link a:hover {
-      background-color: #45a049;
     }
 
     .empty-state {
@@ -238,17 +241,34 @@
 
       const fileItems = filteredFiles.map(file => `
         <div class="file-item">
-          <div class="file-info">
+          <div class="file-info" data-path="${file.path}">
             <div class="file-title">${file.title}</div>
             <div class="file-path">${file.path}</div>
-          </div>
-          <div class="file-link">
-            <a href="${file.path}" target="_blank">查看</a>
           </div>
         </div>
       `).join('');
 
       fileListElement.innerHTML = fileItems;
+
+      // 添加点击事件
+      setTimeout(() => {
+        document.querySelectorAll('.file-info').forEach(item => {
+          item.addEventListener('click', function() {
+            const path = this.getAttribute('data-path');
+            if (path) {
+              try {
+                window.open(path, '_blank');
+              } catch (error) {
+                alert('无法打开文件: ' + error.message);
+                console.error('打开文件失败:', error);
+              }
+            } else {
+              alert('文件路径不存在');
+              console.error('文件路径不存在');
+            }
+          });
+        });
+      }, 100);
     }
 
     // 过滤文件
