@@ -207,24 +207,24 @@
   </div>
 
   <script>
-    let files = [];
-    let filteredFiles = [];
+    // 预定义的HTML文件列表
+    const files = [
+      {
+        "path": "index.html",
+        "title": "Kidds - 儿童英语学习项目"
+      },
+      {
+        "path": "test.html",
+        "title": "测试页面 - Kidds"
+      }
+      // 可以在此添加更多文件
+    ];
+
+    let filteredFiles = [...files];
 
     // 初始化页面
-    async function init() {
-      try {
-        const response = await fetch('/api/html-files');
-        if (!response.ok) {
-          throw new Error('获取文件列表失败');
-        }
-        const data = await response.json();
-        files = data.files;
-        filteredFiles = [...files];
-        renderFileList();
-      } catch (error) {
-        console.error('错误:', error);
-        document.getElementById('fileList').innerHTML = '<div class="empty-state">加载失败，请刷新页面重试</div>';
-      }
+    function init() {
+      renderFileList();
     }
 
     // 渲染文件列表

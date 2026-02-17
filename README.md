@@ -22,10 +22,8 @@ Kidds是一个儿童英语学习项目的主页应用，主要功能是自动扫
 
 ## 技术栈
 
-- **后端**：Node.js + Express
 - **前端**：HTML5 + CSS3 + JavaScript
-- **文件系统**：Node.js fs模块
-- **部署**：Cloudflare Workers
+- **部署**：Cloudflare Pages
 
 ## 安装和使用
 
